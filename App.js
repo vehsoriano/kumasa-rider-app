@@ -1,34 +1,22 @@
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ * @flow
+ */
+
 import React from 'react';
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
+import Routes from './Routes';
 
-import Home from './app/screens/home'
-import Orders from './app/screens/orders'
-
-
-const AppNavigator = createStackNavigator(
-  {
-    Home: Home,
-    Details: Orders,
-  },
-  {
-    initialRouteName: 'Home',
-    defaultNavigationOptions: {
-      headerStyle: {
-        backgroundColor: '#f4511e',
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold',
-      },
-    },
+export default class Onboarding extends React.Component {
+  constructor() {
+    super();
+    //Setting up global variable
+    global.server = 'http://ipc-webapp.herokuapp.com';
+    // global.server = 'http://192.168.0.114:5000';
   }
-);
-
-const AppContainer = createAppContainer(AppNavigator);
-
-export default class App extends React.Component {
   render() {
-    return <AppContainer />;
+    return <Routes />;
   }
 }
