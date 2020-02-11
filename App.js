@@ -13,7 +13,7 @@ export default class Onboarding extends React.Component {
   constructor() {
     super();
     //Setting up global variable
-    global.server = 'http://ipc-webapp.herokuapp.com';
+    // global.server = 'http://ipc-webapp.herokuapp.com';
     // global.server = 'http://192.168.0.114:5000';
   }
   render() {

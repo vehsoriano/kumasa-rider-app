@@ -186,21 +186,24 @@ export default class Dashboard extends Component {
                 {/* <Text style={styles.info}>Icon</Text> */}
               </View>
             </TouchableOpacity>
-            <TouchableOpacity>
-              <View style={styles.menuBox}>
-                <Image
-                  style={styles.icon}
-                  source={require('../../images/settings.png')}
-                />
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate('Profile');
+              }}>
               <View style={styles.menuBox}>
                 <Image
                   style={styles.icon}
                   source={require('../../images/profile.png')}
                 />
                 {/* <Text style={styles.info}>Icon</Text> */}
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <View style={styles.menuBox}>
+                <Image
+                  style={styles.icon}
+                  source={require('../../images/settings.png')}
+                />
               </View>
             </TouchableOpacity>
           </View>

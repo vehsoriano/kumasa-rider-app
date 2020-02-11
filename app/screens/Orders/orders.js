@@ -10,6 +10,7 @@ import {
   Modal,
   ScrollView,
 } from 'react-native';
+// import {Table, Row, Rows} from 'react-native-table-component';
 
 export default class Orders extends Component {
   constructor(props) {
@@ -21,14 +22,15 @@ export default class Orders extends Component {
         {
           id: 1,
           name: 'Mark Doe',
-          position: 'CEO',
-          about:
-            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.',
+          order_number: 'ORDER001',
+          address: '#232 brgy. Tulay na Bato Bongabon Nueva Ecija',
+          order_branch: 'Mcdo Angeles',
+          total_amount: '2500',
         },
         {
           id: 2,
           name: 'John Doe',
-          position: 'CTO',
+          order_number: 'ORDER002',
           image: 'https://bootdey.com/img/Content/avatar/avatar1.png',
           about:
             'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.',
@@ -36,7 +38,7 @@ export default class Orders extends Component {
         {
           id: 3,
           name: 'Clark Man',
-          position: 'Creative designer',
+          order_number: 'ORDER003',
           image: 'https://bootdey.com/img/Content/avatar/avatar6.png',
           about:
             'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.',
@@ -44,7 +46,7 @@ export default class Orders extends Component {
         {
           id: 4,
           name: 'Jaden Boor',
-          position: 'Front-end dev',
+          order_number: 'Front-end dev',
           image: 'https://bootdey.com/img/Content/avatar/avatar5.png',
           about:
             'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.',
@@ -52,7 +54,7 @@ export default class Orders extends Component {
         {
           id: 5,
           name: 'Srick Tree',
-          position: 'Backend-end dev',
+          order_number: 'Backend-end dev',
           image: 'https://bootdey.com/img/Content/avatar/avatar4.png',
           about:
             'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.',
@@ -60,7 +62,7 @@ export default class Orders extends Component {
         {
           id: 6,
           name: 'John Doe',
-          position: 'Creative designer',
+          order_number: 'Creative designer',
           image: 'https://bootdey.com/img/Content/avatar/avatar3.png',
           about:
             'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.',
@@ -68,7 +70,7 @@ export default class Orders extends Component {
         {
           id: 7,
           name: 'John Doe',
-          position: 'Manager',
+          order_number: 'Manager',
           image: 'https://bootdey.com/img/Content/avatar/avatar2.png',
           about:
             'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.',
@@ -76,7 +78,7 @@ export default class Orders extends Component {
         {
           id: 8,
           name: 'John Doe',
-          position: 'IOS dev',
+          order_number: 'IOS dev',
           image: 'https://bootdey.com/img/Content/avatar/avatar1.png',
           about:
             'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.',
@@ -84,7 +86,7 @@ export default class Orders extends Component {
         {
           id: 9,
           name: 'John Doe',
-          position: 'Web dev',
+          order_number: 'Web dev',
           image: 'https://bootdey.com/img/Content/avatar/avatar4.png',
           about:
             'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.',
@@ -92,10 +94,18 @@ export default class Orders extends Component {
         {
           id: 10,
           name: 'John Doe',
-          position: 'Analyst',
+          order_number: 'Analyst',
           image: 'https://bootdey.com/img/Content/avatar/avatar7.png',
           about:
             'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.',
+        },
+      ],
+      orderList: [
+        {
+          id: 1,
+          name: 'Mcdo Fries',
+          qty: '2',
+          price: '200',
         },
       ],
     };
@@ -114,6 +124,7 @@ export default class Orders extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Text style={styles.title}>LIST OF ORDERS</Text>
         <FlatList
           style={styles.userList}
           columnWrapperStyle={styles.listContainer}
@@ -128,15 +139,15 @@ export default class Orders extends Component {
                 onPress={() => {
                   this.clickEventListener(item);
                 }}>
-                <Image style={styles.image} source={{uri: item.image}} />
+                {/* <Image style={styles.image} source={{uri: item.image}} /> */}
                 <View style={styles.cardContent}>
                   <Text style={styles.name}>{item.name}</Text>
-                  <Text style={styles.position}>{item.position}</Text>
-                  <TouchableOpacity
+                  <Text style={styles.position}>{item.order_number}</Text>
+                  {/* <TouchableOpacity
                     style={styles.followButton}
                     onPress={() => this.clickEventListener(item)}>
                     <Text style={styles.followButtonText}>Follow</Text>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                 </View>
               </TouchableOpacity>
             );
@@ -160,12 +171,48 @@ export default class Orders extends Component {
                     {this.state.userSelected.name}
                   </Text>
                   <Text style={styles.position}>
-                    {this.state.userSelected.position}
+                    {this.state.userSelected.order_number}
                   </Text>
                   <Text style={styles.about}>
-                    {this.state.userSelected.about}
+                    {this.state.userSelected.address}
+                  </Text>
+                  <Text style={styles.about}>
+                    {this.state.userSelected.order_branch}
+                  </Text>
+                  <Text style={styles.about}>
+                    {this.state.userSelected.total_amount}
                   </Text>
                 </ScrollView>
+                <FlatList
+                  style={styles.userList}
+                  columnWrapperStyle={styles.listContainer}
+                  data={this.state.data}
+                  keyExtractor={item => {
+                    return item.id;
+                  }}
+                  renderItem={({item}) => {
+                    return (
+                      <TouchableOpacity
+                        style={styles.card}
+                        onPress={() => {
+                          this.clickEventListener(item);
+                        }}>
+                        {/* <Image style={styles.image} source={{uri: item.image}} /> */}
+                        <View style={styles.cardContent}>
+                          <Text style={styles.name}>{item.name}</Text>
+                          <Text style={styles.position}>
+                            {item.order_number}
+                          </Text>
+                          {/* <TouchableOpacity
+                            style={styles.followButton}
+                            onPress={() => this.clickEventListener(item)}>
+                            <Text style={styles.followButtonText}>Follow</Text>
+                          </TouchableOpacity> */}
+                        </View>
+                      </TouchableOpacity>
+                    );
+                  }}
+                />
               </View>
               <View style={styles.popupButtons}>
                 <TouchableOpacity
@@ -196,7 +243,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#eeeeee',
   },
-
+  title: {
+    padding: 10,
+    marginLeft: 12,
+    fontWeight: '400',
+  },
   headerContent: {
     padding: 30,
     alignItems: 'center',
@@ -216,7 +267,7 @@ const styles = StyleSheet.create({
   },
   cardContent: {
     marginLeft: 20,
-    marginTop: 10,
+    marginTop: 3,
   },
   image: {
     width: 90,

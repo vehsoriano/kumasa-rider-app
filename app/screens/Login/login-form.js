@@ -8,12 +8,19 @@ import {
   StatusBar,
   AsyncStorage,
 } from 'react-native';
-
 export default class LoginForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      status: '',
+    };
+  }
   onSubmit = () => {
     _store('id_token', 'in');
+    this.props.sample.navigate('Dashboard');
   };
   render() {
+    // console.log();
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <StatusBar barStyle="light-content" />
@@ -37,7 +44,7 @@ export default class LoginForm extends Component {
         />
         <TouchableOpacity
           style={styles.buttonContainer}
-          onPress={this.onSubmit()}>
+          onPress={this.onSubmit}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>

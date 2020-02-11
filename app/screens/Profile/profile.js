@@ -1,7 +1,12 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableOpacity, AsyncStorage} from 'react-native';
 
 export default class Profile extends Component {
+  handleLogout = async () => {
+    // Alert.alert('you clicked me')
+    await AsyncStorage.clear();
+    this.props.navigation.navigate('Login');
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -26,11 +31,10 @@ export default class Profile extends Component {
               electram expetendis, omittam deseruisse consequuntur ius an,
             </Text>
 
-            <TouchableOpacity style={styles.buttonContainer}>
-              <Text>Opcion 1</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonContainer}>
-              <Text>Opcion 2</Text>
+            <TouchableOpacity
+              style={styles.buttonContainer}
+              onPress={this.handleLogout}>
+              <Text style={styles.btnText}>Logout</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -41,7 +45,7 @@ export default class Profile extends Component {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: '#00BFFF',
+    backgroundColor: '#f4511e',
     height: 200,
   },
   avatar: {
@@ -93,6 +97,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     width: 250,
     borderRadius: 30,
-    backgroundColor: '#00BFFF',
+    backgroundColor: '#cb4335',
+  },
+  btnText: {
+    color: '#fff',
   },
 });

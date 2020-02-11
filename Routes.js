@@ -9,8 +9,6 @@ import {
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 
-// import Home from './app/screens/home';
-// import Orders from './app/screens/orders';
 import Login from './app/screens/Login/login';
 import Profile from './app/screens/Profile/profile';
 import Dashboard from './app/screens/Dashboard/dashboard';
@@ -33,10 +31,18 @@ const App = createStackNavigator({
       header: null,
     },
   },
-  Profile: Profile,
+  Profile: {
+    screen: Profile,
+    navigationOptions: {
+      title: 'Profile',
+      headerTintColor: '#fff',
+      headerStyle: {
+        backgroundColor: '#f4511e',
+      },
+    },
+  },
   Orders: {
     screen: Orders,
-
     navigationOptions: {
       title: 'Orders',
       headerTintColor: '#fff',
