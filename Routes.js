@@ -13,7 +13,10 @@ import Login from './app/screens/Login/login';
 import Profile from './app/screens/Profile/profile';
 import Dashboard from './app/screens/Dashboard/dashboard';
 import Orders from './app/screens/Orders/orders';
+import Map from './app/screens/Map/map';
 import Navigation from './app/components/BottomTabBar/navigation';
+import AcceptedOrder from './app/screens/Orders/accepted_orders';
+import OrderDetail from './app/screens/Orders/order_details';
 
 const Auth = createStackNavigator(
   {
@@ -45,6 +48,36 @@ const App = createStackNavigator({
     screen: Orders,
     navigationOptions: {
       title: 'Orders',
+      headerTintColor: '#fff',
+      headerStyle: {
+        backgroundColor: '#f4511e',
+      },
+    },
+  },
+  Map: {
+    screen: Map,
+    navigationOptions: {
+      title: 'Map',
+      headerTintColor: '#fff',
+      headerStyle: {
+        backgroundColor: '#f4511e',
+      },
+    },
+  },
+  AcceptedOrder: {
+    screen: AcceptedOrder,
+    navigationOptions: {
+      title: 'Accepted Order',
+      headerTintColor: '#fff',
+      headerStyle: {
+        backgroundColor: '#f4511e',
+      },
+    },
+  },
+  OrderDetail: {
+    screen: OrderDetail,
+    navigationOptions: {
+      title: 'Order Detail',
       headerTintColor: '#fff',
       headerStyle: {
         backgroundColor: '#f4511e',

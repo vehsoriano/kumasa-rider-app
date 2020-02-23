@@ -165,7 +165,10 @@ export default class Dashboard extends Component {
             </TouchableOpacity>
           </View>
           <View style={styles.bodyContent}>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate('Map');
+              }}>
               <View style={styles.menuBox}>
                 <Image
                   style={styles.icon}
@@ -198,14 +201,14 @@ export default class Dashboard extends Component {
                 {/* <Text style={styles.info}>Icon</Text> */}
               </View>
             </TouchableOpacity>
-            <TouchableOpacity>
+            {/* <TouchableOpacity>
               <View style={styles.menuBox}>
                 <Image
                   style={styles.icon}
                   source={require('../../images/settings.png')}
                 />
               </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
       </View>

@@ -7,6 +7,7 @@ import {
   Button,
   TouchableHighlight,
   Image,
+  AsyncStorage,
   Alert,
 } from 'react-native';
 
@@ -20,8 +21,9 @@ export default class Login extends Component {
   }
 
   onClickListener = viewId => {
+    _store('id_token', 'Token12345');
     this.props.navigation.navigate('Dashboard');
-    Alert.alert('Alert', 'Button pressed ' + viewId);
+    // Alert.alert('Alert', 'Button pressed ' + viewId);
   };
 
   render() {
@@ -104,7 +106,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#d68910',
   },
   logoContainer: {
-    alignItems: 'center',
+    // alignItems: 'center',
     marginBottom: 25,
     justifyContent: 'center',
   },
@@ -160,3 +162,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
+
+const _store = async (key, value) => {
+  await AsyncStorage.setItem(key, value);
+};

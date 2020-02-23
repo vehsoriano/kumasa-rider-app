@@ -111,12 +111,12 @@ export default class Orders extends Component {
     };
   }
 
-  clickEventListener = () => {
+  clickEventListener = item => {
     // this.setState({userSelected: item}, () => {
     //   this.setModalVisible(true);
     // });
     this.props.navigation.navigate('OrderDetail');
-    // console.log(item);
+    console.log(item);
   };
 
   // setModalVisible(visible) {
@@ -139,7 +139,7 @@ export default class Orders extends Component {
               <TouchableOpacity
                 style={styles.card}
                 onPress={() => {
-                  this.clickEventListener();
+                  this.clickEventListener(item);
                 }}>
                 {/* <Image style={styles.image} source={{uri: item.image}} /> */}
                 <View style={styles.cardContent}>
@@ -155,11 +155,6 @@ export default class Orders extends Component {
             );
           }}
         />
-        <TouchableOpacity
-          style={[styles.btnContainer, styles.btnSuccess]}
-          onPress={() => this.props.navigation.navigate('AcceptedOrder')}>
-          <Text style={styles.btnText}>LIST OF ACCEPTED Order</Text>
-        </TouchableOpacity>
       </View>
     );
   }
