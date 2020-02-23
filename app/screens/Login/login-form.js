@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 import {
   StyleSheet,
   TextInput,
@@ -13,11 +14,63 @@ export default class LoginForm extends Component {
     super(props);
     this.state = {
       status: '',
+      email: '',
     };
   }
   onSubmit = () => {
-    _store('id_token', 'in');
-    this.props.sample.navigate('Dashboard');
+    try {
+      const user = {
+        email: this.state.email,
+        password: this.state.password,
+      };
+      console.log(user);
+      // axios
+      //   .post(`${global.server}/api/auth`, user)
+      //   .then(res => {
+      //     // return console.warn(res.data)
+      //     console.log(res.data);
+      //     // if (res.data.data.status == 'success') {
+      //     //   // console.warn(res.data.token);
+      //     //   _store('id_token', res.data.token);
+      //     //   // this.setState({spinner: false});
+      //     //   return this.props.navigation.navigate('BusinessDashboard');
+      //     // } else {
+      //     //   Alert.alert(
+      //     //     'Warning',
+      //     //     res.data.data.msg,
+      //     //     [
+      //     //       {
+      //     //         text: 'Cancel',
+      //     //         onPress: () => console.log('Cancel Pressed'),
+      //     //         style: 'cancel',
+      //     //       },
+      //     //       {text: 'OK', onPress: () => console.log('OK Pressed')},
+      //     //     ],
+      //     //     {cancelable: false},
+      //     //   );
+      //     //   this.setState({spinner: false});
+      //     // }
+      //   })
+      //   .catch(err => {
+      //     // this.setState({spinner: false});
+      //     // Alert.alert(
+      //     //   'Error',
+      //     //   err.message,
+      //     //   [
+      //     //     {
+      //     //       text: 'Cancel',
+      //     //       onPress: () => console.log('Cancel Pressed'),
+      //     //       style: 'cancel',
+      //     //     },
+      //     //     {text: 'OK', onPress: () => console.log('OK Pressed')},
+      //     //   ],
+      //     //   {cancelable: false},
+      //     // );
+      //     console.warn(err.message);
+      //   });
+    } catch (error) {}
+    // _store('id_token', 'in');
+    // this.props.sample.navigate('Dashboard');
   };
   render() {
     // console.log();
@@ -33,6 +86,8 @@ export default class LoginForm extends Component {
           keyboardType="email-address"
           autoCapitalize="none"
           autoCorrect={false}
+          onChangeText={email => this.setState({email})}
+          value={this.state.email}
         />
         <TextInput
           secureTextEntry

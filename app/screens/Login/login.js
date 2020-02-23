@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 import {
   StyleSheet,
   Text,
@@ -21,9 +22,53 @@ export default class Login extends Component {
   }
 
   onClickListener = viewId => {
-    _store('id_token', 'Token12345');
-    this.props.navigation.navigate('Dashboard');
-    // Alert.alert('Alert', 'Button pressed ' + viewId);
+    const user = {
+      email: this.state.email,
+      password: this.state.password,
+    };
+    axios
+      .post(`${global.server}/api/auth`, user)
+      .then(res => {
+        // return console.warn(res.data)
+        const userData = res.data;
+        if (userData.data.status == 'success') {
+          _store('id_token', userData.token);
+          // this.props.sample.navigate('Dashboard');
+          this.props.navigation.navigate('Dashboard');
+        } else {
+          Alert.alert(
+            'Warning',
+            userData.data.msg,
+            [
+              {
+                text: 'Cancel',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+              },
+              {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ],
+            {cancelable: false},
+          );
+          this.setState({spinner: false});
+        }
+      })
+      .catch(err => {
+        this.setState({spinner: false});
+        Alert.alert(
+          'Error',
+          err.message,
+          [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+            },
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+          ],
+          {cancelable: false},
+        );
+        console.warn(err.message);
+      });
   };
 
   render() {

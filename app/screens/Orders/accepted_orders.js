@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 import {
   StyleSheet,
   Text,
@@ -18,88 +19,7 @@ export default class Orders extends Component {
     this.state = {
       modalVisible: false,
       userSelected: [],
-      data: [
-        {
-          id: 1,
-          name: 'Mark Doe',
-          order_number: 'KUMASA_ORDER001',
-          address: '#232 brgy. Tulay na Bato Bongabon Nueva Ecija',
-          order_branch: 'Mcdo Angeles',
-          total_amount: '2500',
-        },
-        {
-          id: 2,
-          name: 'John Doe',
-          order_number: 'KUMASA_ORDER002',
-          image: 'https://bootdey.com/img/Content/avatar/avatar1.png',
-          about:
-            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.',
-        },
-        {
-          id: 3,
-          name: 'Clark Man',
-          order_number: 'KUMASA_ORDER003',
-          image: 'https://bootdey.com/img/Content/avatar/avatar6.png',
-          about:
-            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.',
-        },
-        {
-          id: 4,
-          name: 'Jaden Boor',
-          order_number: 'KUMASA_ORDER004',
-          image: 'https://bootdey.com/img/Content/avatar/avatar5.png',
-          about:
-            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.',
-        },
-        {
-          id: 5,
-          name: 'Srick Tree',
-          order_number: 'KUMASA_ORDER005',
-          image: 'https://bootdey.com/img/Content/avatar/avatar4.png',
-          about:
-            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.',
-        },
-        {
-          id: 6,
-          name: 'John Doe',
-          order_number: 'KUMASA_ORDER006',
-          image: 'https://bootdey.com/img/Content/avatar/avatar3.png',
-          about:
-            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.',
-        },
-        {
-          id: 7,
-          name: 'John Doe',
-          order_number: 'KUMASA_ORDER007',
-          image: 'https://bootdey.com/img/Content/avatar/avatar2.png',
-          about:
-            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.',
-        },
-        {
-          id: 8,
-          name: 'John Doe',
-          order_number: 'KUMASA_ORDER008',
-          image: 'https://bootdey.com/img/Content/avatar/avatar1.png',
-          about:
-            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.',
-        },
-        {
-          id: 9,
-          name: 'John Doe',
-          order_number: 'KUMASA_ORDER009',
-          image: 'https://bootdey.com/img/Content/avatar/avatar4.png',
-          about:
-            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.',
-        },
-        {
-          id: 10,
-          name: 'John Doe',
-          order_number: 'KUMASA_ORDER0010',
-          image: 'https://bootdey.com/img/Content/avatar/avatar7.png',
-          about:
-            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.',
-        },
-      ],
+      data: [],
       orderList: [
         {
           id: 1,
@@ -111,12 +31,40 @@ export default class Orders extends Component {
     };
   }
 
+  componentDidMount() {
+    this.getData();
+  }
+
   clickEventListener = item => {
     // this.setState({userSelected: item}, () => {
     //   this.setModalVisible(true);
     // });
-    this.props.navigation.navigate('OrderDetail');
     console.log(item);
+    this.props.navigation.navigate('OrderDetail', {
+      order_id: item.order_id,
+      name: item.first_name + ' ' + item.last_name,
+      address: item.order_address + ' ' + item.order_city,
+      total: item.order_total,
+      action: 'accepted',
+    });
+  };
+
+  getData = () => {
+    axios
+      .get(`${global.server}/api/order/orders`)
+      .then(res => {
+        // console.log(res.data);
+        const orderData = res.data;
+        this.setState({
+          data: orderData,
+        });
+        // setOrderData(res.data);
+        // setCurrentOrder(res.data);
+        // setLoader(true)
+      })
+      .catch(err => {
+        console.log(err.response);
+      });
   };
 
   // setModalVisible(visible) {
@@ -135,24 +83,28 @@ export default class Orders extends Component {
             return item.id;
           }}
           renderItem={({item}) => {
-            return (
-              <TouchableOpacity
-                style={styles.card}
-                onPress={() => {
-                  this.clickEventListener(item);
-                }}>
-                {/* <Image style={styles.image} source={{uri: item.image}} /> */}
-                <View style={styles.cardContent}>
-                  <Text style={styles.name}>{item.name}</Text>
-                  <Text style={styles.position}>{item.order_number}</Text>
-                  {/* <TouchableOpacity
-                    style={styles.followButton}
-                    onPress={() => this.clickEventListener(item)}>
-                    <Text style={styles.followButtonText}>Follow</Text>
-                  </TouchableOpacity> */}
-                </View>
-              </TouchableOpacity>
-            );
+            if (item.status == 'On Process') {
+              return (
+                <TouchableOpacity
+                  style={styles.card}
+                  onPress={() => {
+                    this.clickEventListener(item);
+                  }}>
+                  {/* <Image style={styles.image} source={{uri: item.image}} /> */}
+                  <View style={styles.cardContent}>
+                    <Text style={styles.name}>
+                      {item.first_name + ' ' + item.last_name}
+                    </Text>
+                    <Text style={styles.position}>{item.order_number}</Text>
+                    {/* <TouchableOpacity
+                      style={styles.followButton}
+                      onPress={() => this.clickEventListener(item)}>
+                      <Text style={styles.followButtonText}>Follow</Text>
+                    </TouchableOpacity> */}
+                  </View>
+                </TouchableOpacity>
+              );
+            }
           }}
         />
       </View>
@@ -218,14 +170,14 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 18,
     flex: 1,
-    alignSelf: 'center',
+    // alignSelf: 'center',
     color: '#008080',
     fontWeight: 'bold',
   },
   position: {
     fontSize: 14,
     flex: 1,
-    alignSelf: 'center',
+    // alignSelf: 'center',
     color: '#696969',
   },
   about: {

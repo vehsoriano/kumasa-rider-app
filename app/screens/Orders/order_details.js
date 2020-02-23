@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 import {
   StyleSheet,
   Text,
@@ -8,40 +9,92 @@ import {
   Alert,
   ScrollView,
   FlatList,
+  AsyncStorage,
   Button,
 } from 'react-native';
-
+let id_token = '';
 export default class ProductDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [
-        {
-          id: 1,
-          name: 'Fries',
-          order_number: 'Mcdonalds Angeles',
-        },
-        {
-          id: 2,
-          name: '2pcs Chicken Joy',
-          order_number: 'Mcdonalds Angeles',
-        },
-      ],
+      data: [],
+      rider_id: '',
+      order_id: this.props.navigation.state.params.order_id,
+      name: this.props.navigation.state.params.name,
+      address: this.props.navigation.state.params.address,
+      total: this.props.navigation.state.params.total,
+      action: this.props.navigation.state.params.action,
     };
   }
 
+  getOrderList = () => {
+    axios
+      .get(`${global.server}/api/order/ordersItem/${this.state.order_id}`)
+      .then(res => {
+        console.log(res.data);
+        const orderData = res.data;
+        this.setState({
+          data: orderData,
+        });
+
+        // setOrderData(res.data);
+        // setCurrentOrder(res.data);
+        // setLoader(true)
+      })
+      .catch(err => {
+        console.log(err.response);
+      });
+  };
+
+  componentDidMount() {
+    AsyncStorage.getItem('id_token').then(res => {
+      id_token = res;
+      // console.log(id_token);
+      // get the user detail
+      axios
+        .get(`${global.server}/api/auth`, {headers: {'x-auth-token': id_token}})
+        .then(res => {
+          // console.log(res.data);
+          const userData = res.data;
+          this.setState({
+            rider_id: userData._id,
+          });
+          this.getOrderList();
+        });
+    });
+  }
+
   clickEventListener() {
-    Alert.alert('Success', 'Product has beed added to cart');
+    const body = {order_id: this.state.order_id};
+    axios
+      .put(`${global.server}/api/order/accept/${this.state.rider_id}`, body)
+      .then(res => {
+        console.log(res.data);
+        // const orderData = res.data;
+        // this.setState({
+        //   data: orderData,
+        // });
+        Alert.alert('Success', 'Order Accepted');
+        this.props.navigation.navigate('Dashboard');
+
+        // setOrderData(res.data);
+        // setCurrentOrder(res.data);
+        // setLoader(true)
+      })
+      .catch(err => {
+        console.log(err.response);
+      });
   }
 
   render() {
+    console.log(this.state.order_id);
     return (
       <View style={styles.container}>
         <ScrollView>
           <View style={{alignItems: 'center', marginHorizontal: 30}}>
-            <Text style={styles.name}>Jerald Dela Cruz</Text>
-            <Text style={styles.price}>P450</Text>
-            <Text style={styles.description}>Angeles City</Text>
+            <Text style={styles.name}>{this.state.name}</Text>
+            <Text style={styles.price}>P{this.state.total}</Text>
+            <Text style={styles.description}>{this.state.address}</Text>
           </View>
           <View style={styles.separator}></View>
           <Text style={styles.title}>LIST OF ORDERS</Text>
@@ -59,8 +112,11 @@ export default class ProductDetail extends Component {
               renderItem={({item}) => {
                 return (
                   <View style={styles.cardContent}>
-                    <Text style={styles.name}>{item.name}</Text>
-                    <Text style={styles.position}>{item.order_number}</Text>
+                    <Text style={styles.itemName}>{item.item_name}</Text>
+                    {/* <Text style={styles.subName}>{item.order_number}</Text> */}
+                    <Text style={styles.subName}>Quantity: {item.qty}</Text>
+                    <Text style={styles.subName}>P {item.price}</Text>
+                    <Text style={styles.subName}>Total: {item.total}</Text>
                   </View>
                 );
               }}
@@ -68,14 +124,18 @@ export default class ProductDetail extends Component {
           </View>
           {/* <View style={styles.contentColors}></View>
           <View style={styles.contentSize}></View> */}
-          <View style={styles.separator}></View>
-          <View style={styles.addToCarContainer}>
-            <TouchableOpacity
-              style={styles.shareButton}
-              onPress={() => this.clickEventListener()}>
-              <Text style={styles.shareButtonText}>Accept</Text>
-            </TouchableOpacity>
-          </View>
+          {this.state.action == 'not accepted' ? (
+            <>
+              <View style={styles.separator}></View>
+              <View style={styles.addToCarContainer}>
+                <TouchableOpacity
+                  style={styles.shareButton}
+                  onPress={() => this.clickEventListener()}>
+                  <Text style={styles.shareButtonText}>Accept</Text>
+                </TouchableOpacity>
+              </View>
+            </>
+          ) : null}
         </ScrollView>
       </View>
     );
@@ -148,16 +208,16 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginTop: 3,
   },
-  name: {
+  itemName: {
     fontSize: 18,
-    flex: 1,
+    // flex: 1,
     // alignSelf: 'center',
     color: '#008080',
     fontWeight: 'bold',
   },
-  position: {
+  subName: {
     fontSize: 14,
-    flex: 1,
+    // flex: 1,
     // alignSelf: 'center',
     color: '#696969',
   },

@@ -91,35 +91,131 @@
 // });
 
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import axios from 'axios';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  AsyncStorage,
+} from 'react-native';
 // import Navigation from '../../components/BottomTabBar/navigation';
+let id_token = '';
 
 export default class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       status: '',
+      textStatus: '',
+      rider_id: '',
+      rider_code: '',
+      rider_name: '',
+      items: [],
     };
   }
 
   componentDidMount() {
-    this.setState({
-      status: 'Offline',
+    this.getData();
+  }
+
+  getData() {
+    AsyncStorage.getItem('id_token').then(res => {
+      id_token = res;
+      // console.log(id_token);
+      // get the user detail
+      axios
+        .get(`${global.server}/api/auth`, {headers: {'x-auth-token': id_token}})
+        .then(res => {
+          // console.log(res.data);
+          const userData = res.data;
+          let textStatus = '';
+          if (userData.status) {
+            textStatus = 'Online';
+          } else {
+            textStatus = 'Offline';
+          }
+
+          // get riders profile
+          axios
+            .get(`${global.server}/api/users/riders/${userData._id}`)
+            .then(res => {
+              const riderProfileData = res.data;
+              this.setState({
+                status: userData.status,
+                textStatus: textStatus,
+                rider_id: userData._id,
+                rider_code: riderProfileData.rider_id,
+                rider_name: userData.first_name + ' ' + userData.last_name,
+              });
+            });
+        });
     });
   }
 
   onStatusChange = () => {
-    if (this.state.status == 'Online') {
-      this.setState({
-        status: 'Offline',
-      });
-      this.props.navigation.navigate('Orders');
+    let status = false;
+    if (this.state.status) {
+      status = false;
     } else {
-      this.setState({
-        status: 'Online',
-      });
+      status = true;
     }
+    const req = {
+      status,
+    };
+    axios
+      .put(
+        `${global.server}/api/users/rider_update_status/${this.state.rider_id}`,
+        req,
+      )
+      .then(res => {
+        console.log(res.data);
+        this.getData();
+      });
   };
+
+
+
+
+
+
+  // testChange = () => {
+  //   const order_item_id = '24rr45rer43rer4';
+  //   const qty = '2';
+  //   this.state.items.push({
+  //     order_item_id: order_item_id,
+  //     qty: qty,
+  //   });
+  //   console.log(this.state.items);
+  // };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // testSubmit = () => {
+  //   const sample = {test: this.state.test};
+  //   axios.post(`${global.server}/api/users/test`, sample).then(res => {
+  //     console.log(res.data);
+  //     this.getData();
+  //   });
+  // };
 
   render() {
     return (
@@ -136,12 +232,14 @@ export default class Dashboard extends Component {
               style={styles.avatar}
               source={require('../../images/avatar1.png')}
             />
-            <Text style={styles.name}>John Doe</Text>
-            <Text style={styles.subName}>KUMASARIDER01</Text>
+            <Text style={styles.name}>{this.state.rider_name}</Text>
+            <Text style={styles.subName}>{this.state.rider_code}</Text>
           </View>
         </View>
         <View style={styles.profileDetail}>
-          <View style={styles.detailContent}>
+          <View
+            style={styles.detailContent}
+           >
             <Text style={styles.title}>Wallet</Text>
             <Text style={styles.count}>200</Text>
           </View>
@@ -156,18 +254,17 @@ export default class Dashboard extends Component {
             <TouchableOpacity
               style={[
                 styles.buttonContainer,
-                this.state.status == 'Online'
-                  ? styles.btnSuccess
-                  : styles.btnDanger,
+                this.state.status ? styles.btnSuccess : styles.btnDanger,
               ]}
               onPress={() => this.onStatusChange()}>
-              <Text style={styles.buttonText}>{this.state.status}</Text>
+              <Text style={styles.buttonText}>{this.state.textStatus}</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.bodyContent}>
             <TouchableOpacity
               onPress={() => {
                 this.props.navigation.navigate('Map');
+                // this.testChange();
               }}>
               <View style={styles.menuBox}>
                 <Image
@@ -177,6 +274,7 @@ export default class Dashboard extends Component {
                 {/* <Text style={styles.info}>Icon</Text> */}
               </View>
             </TouchableOpacity>
+
             <TouchableOpacity
               onPress={() => {
                 this.props.navigation.navigate('Orders');
