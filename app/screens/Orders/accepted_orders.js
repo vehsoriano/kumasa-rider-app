@@ -83,7 +83,7 @@ export default class Orders extends Component {
             return item.id;
           }}
           renderItem={({item}) => {
-            if (item.status == 'On Process') {
+            if (item.status == 'Accepted') {
               return (
                 <TouchableOpacity
                   style={styles.card}

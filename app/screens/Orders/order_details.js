@@ -65,9 +65,9 @@ export default class ProductDetail extends Component {
   }
 
   clickEventListener() {
-    const body = {order_id: this.state.order_id};
+    const body = {order_id: this.state.order_id, status: 'Accepted'};
     axios
-      .put(`${global.server}/api/order/accept/${this.state.rider_id}`, body)
+      .put(`${global.server}/api/order/proccess/${this.state.rider_id}`, body)
       .then(res => {
         console.log(res.data);
         // const orderData = res.data;
@@ -75,6 +75,27 @@ export default class ProductDetail extends Component {
         //   data: orderData,
         // });
         Alert.alert('Success', 'Order Accepted');
+        this.props.navigation.navigate('Dashboard');
+
+        // setOrderData(res.data);
+        // setCurrentOrder(res.data);
+        // setLoader(true)
+      })
+      .catch(err => {
+        console.log(err.response);
+      });
+  }
+  handleOnDeliver() {
+    const body = {order_id: this.state.order_id, status: 'Delivered'};
+    axios
+      .put(`${global.server}/api/order/proccess/${this.state.rider_id}`, body)
+      .then(res => {
+        console.log(res.data);
+        // const orderData = res.data;
+        // this.setState({
+        //   data: orderData,
+        // });
+        Alert.alert('Success', 'Order Deliverd');
         this.props.navigation.navigate('Dashboard');
 
         // setOrderData(res.data);
@@ -135,7 +156,18 @@ export default class ProductDetail extends Component {
                 </TouchableOpacity>
               </View>
             </>
-          ) : null}
+          ) : (
+            <>
+              <View style={styles.separator}></View>
+              <View style={styles.addToCarContainer}>
+                <TouchableOpacity
+                  style={styles.shareButton}
+                  onPress={() => this.handleOnDeliver()}>
+                  <Text style={styles.shareButtonText}>Delivered</Text>
+                </TouchableOpacity>
+              </View>
+            </>
+          )}
         </ScrollView>
       </View>
     );

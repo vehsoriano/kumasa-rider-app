@@ -29,16 +29,19 @@ export default class Login extends Component {
     axios
       .post(`${global.server}/api/auth`, user)
       .then(res => {
-        // return console.warn(res.data)
+        // return console.warn(res.data);
         const userData = res.data;
-        if (userData.data.status == 'success') {
+        if (
+          userData.data.status == 'success' &&
+          userData.user.role == 'rider'
+        ) {
           _store('id_token', userData.token);
           // this.props.sample.navigate('Dashboard');
           this.props.navigation.navigate('Dashboard');
         } else {
           Alert.alert(
             'Warning',
-            userData.data.msg,
+            'User Not Found!',
             [
               {
                 text: 'Cancel',
@@ -127,17 +130,11 @@ export default class Login extends Component {
           <Text style={styles.loginText}>Login</Text>
         </TouchableHighlight>
 
-        <TouchableHighlight
+        {/* <TouchableHighlight
           style={styles.buttonTextContainer}
           onPress={() => null}>
           <Text>Forgot your password?</Text>
-        </TouchableHighlight>
-
-        <TouchableHighlight
-          style={styles.buttonTextContainer}
-          onPress={() => null}>
-          <Text>Register</Text>
-        </TouchableHighlight>
+        </TouchableHighlight> */}
       </View>
     );
   }

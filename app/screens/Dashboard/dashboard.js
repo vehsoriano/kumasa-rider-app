@@ -100,6 +100,7 @@ import {
   TouchableOpacity,
   AsyncStorage,
 } from 'react-native';
+import {NavigationEvents} from 'react-navigation';
 // import Navigation from '../../components/BottomTabBar/navigation';
 let id_token = '';
 
@@ -112,6 +113,8 @@ export default class Dashboard extends Component {
       rider_id: '',
       rider_code: '',
       rider_name: '',
+      total_spend: '',
+      total_earned: '',
       items: [],
     };
   }
@@ -128,26 +131,23 @@ export default class Dashboard extends Component {
       axios
         .get(`${global.server}/api/auth`, {headers: {'x-auth-token': id_token}})
         .then(res => {
-          // console.log(res.data);
           const userData = res.data;
-          let textStatus = '';
-          if (userData.status) {
-            textStatus = 'Online';
-          } else {
-            textStatus = 'Offline';
-          }
 
           // get riders profile
           axios
             .get(`${global.server}/api/users/riders/${userData._id}`)
             .then(res => {
-              const riderProfileData = res.data;
+              // console.log(res.data);
+              const riderProfileData = res.data.rider;
+              const riderWalletData = res.data.wallet;
               this.setState({
                 status: userData.status,
-                textStatus: textStatus,
+                textStatus: riderProfileData.status,
                 rider_id: userData._id,
                 rider_code: riderProfileData.rider_id,
                 rider_name: userData.first_name + ' ' + userData.last_name,
+                total_spend: riderWalletData.total_spend,
+                total_earned: riderWalletData.total_earned,
               });
             });
         });
@@ -155,11 +155,11 @@ export default class Dashboard extends Component {
   }
 
   onStatusChange = () => {
-    let status = false;
-    if (this.state.status) {
-      status = false;
+    let status = '';
+    if (this.state.textStatus == 'Online') {
+      status = 'Offline';
     } else {
-      status = true;
+      status = 'Online';
     }
     const req = {
       status,
@@ -175,11 +175,6 @@ export default class Dashboard extends Component {
       });
   };
 
-
-
-
-
-
   // testChange = () => {
   //   const order_item_id = '24rr45rer43rer4';
   //   const qty = '2';
@@ -189,25 +184,6 @@ export default class Dashboard extends Component {
   //   });
   //   console.log(this.state.items);
   // };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   // testSubmit = () => {
   //   const sample = {test: this.state.test};
@@ -220,6 +196,7 @@ export default class Dashboard extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <NavigationEvents onDidFocus={() => this.getData()} />
         <View style={styles.header}>
           <View style={styles.headerContent}>
             {/* <Image
@@ -237,15 +214,13 @@ export default class Dashboard extends Component {
           </View>
         </View>
         <View style={styles.profileDetail}>
-          <View
-            style={styles.detailContent}
-           >
-            <Text style={styles.title}>Wallet</Text>
-            <Text style={styles.count}>200</Text>
+          <View style={styles.detailContent}>
+            <Text style={styles.title}>Spent</Text>
+            <Text style={styles.count}>{this.state.total_spend}</Text>
           </View>
           <View style={styles.detailContent}>
             <Text style={styles.title}>Earnings</Text>
-            <Text style={styles.count}>200</Text>
+            <Text style={styles.count}>{this.state.total_earned}</Text>
           </View>
         </View>
 
@@ -254,7 +229,9 @@ export default class Dashboard extends Component {
             <TouchableOpacity
               style={[
                 styles.buttonContainer,
-                this.state.status ? styles.btnSuccess : styles.btnDanger,
+                this.state.textStatus == 'Online'
+                  ? styles.btnSuccess
+                  : styles.btnDanger,
               ]}
               onPress={() => this.onStatusChange()}>
               <Text style={styles.buttonText}>{this.state.textStatus}</Text>
