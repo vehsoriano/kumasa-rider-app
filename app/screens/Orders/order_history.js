@@ -8,11 +8,12 @@ import {
   TouchableOpacity,
   FlatList,
   Dimensions,
+  AsyncStorage,
   Modal,
   ScrollView,
 } from 'react-native';
 // import {Table, Row, Rows} from 'react-native-table-component';
-
+let id_token = '';
 export default class Orders extends Component {
   constructor(props) {
     super(props);
@@ -46,33 +47,43 @@ export default class Orders extends Component {
       address: item.order_address + ' ' + item.order_city,
       phone_number: item.phone_number,
       total: item.order_total,
-      action: 'not accepted',
+      action: 'history',
     });
     // console.log(item);
   };
 
   getData = () => {
-    axios
-      .get(`${global.server}/api/order/orders`)
-      .then(res => {
-        // console.log(res.data);
-        const orderData = res.data;
-        this.setState({
-          data: orderData,
+    AsyncStorage.getItem('id_token').then(res => {
+      id_token = res;
+      // console.log(id_token);
+      // get the user detail
+      axios
+        .get(`${global.server}/api/auth`, {headers: {'x-auth-token': id_token}})
+        .then(res => {
+          const userData = res.data;
+          axios
+            .get(`${global.server}/api/order/orders/${userData._id}`)
+            .then(res => {
+              // console.log(res.data);
+              const orderData = res.data;
+              this.setState({
+                data: orderData,
+              });
+              // setOrderData(res.data);
+              // setCurrentOrder(res.data);
+              // setLoader(true)
+            })
+            .catch(err => {
+              console.log(err.response);
+            });
         });
-        // setOrderData(res.data);
-        // setCurrentOrder(res.data);
-        // setLoader(true)
-      })
-      .catch(err => {
-        console.log(err.response);
-      });
+    });
   };
 
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>LIST OF ORDERS</Text>
+        {/* <Text style={styles.title}>LIST OF ORDERS</Text> */}
         <FlatList
           style={styles.userList}
           columnWrapperStyle={styles.listContainer}
@@ -81,7 +92,7 @@ export default class Orders extends Component {
             return item.id;
           }}
           renderItem={({item}) => {
-            if (item.status == 'Pending') {
+            if (item.status == 'Delivered' || item.status == 'Rejected') {
               return (
                 <TouchableOpacity
                   style={styles.card}
@@ -94,6 +105,16 @@ export default class Orders extends Component {
                       {item.first_name + ' ' + item.last_name}
                     </Text>
                     <Text style={styles.position}>{item.order_number}</Text>
+                    {item.status == 'Delivered' ? (
+                      <Text style={[styles.position, styles.statusDelivered]}>
+                        {item.status}
+                      </Text>
+                    ) : (
+                      <Text style={[styles.position, styles.statusRejected]}>
+                        {item.status}
+                      </Text>
+                    )}
+
                     {/* <TouchableOpacity
                       style={styles.followButton}
                       onPress={() => this.clickEventListener(item)}>
@@ -105,11 +126,6 @@ export default class Orders extends Component {
             }
           }}
         />
-        <TouchableOpacity
-          style={[styles.btnContainer, styles.btnSuccess]}
-          onPress={() => this.props.navigation.navigate('AcceptedOrder')}>
-          <Text style={styles.btnText}>LIST OF ACCEPTED Order</Text>
-        </TouchableOpacity>
       </View>
     );
   }
@@ -182,6 +198,12 @@ const styles = StyleSheet.create({
     flex: 1,
     // alignSelf: 'center',
     color: '#696969',
+  },
+  statusDelivered: {
+    color: '#2ecc71',
+  },
+  statusRejected: {
+    color: '#cb4335',
   },
   about: {
     marginHorizontal: 10,

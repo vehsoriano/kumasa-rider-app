@@ -22,6 +22,7 @@ export default class ProductDetail extends Component {
       order_id: this.props.navigation.state.params.order_id,
       name: this.props.navigation.state.params.name,
       address: this.props.navigation.state.params.address,
+      phone_number: this.props.navigation.state.params.phone_number,
       total: this.props.navigation.state.params.total,
       action: this.props.navigation.state.params.action,
     };
@@ -85,8 +86,8 @@ export default class ProductDetail extends Component {
         console.log(err.response);
       });
   }
-  handleOnDeliver() {
-    const body = {order_id: this.state.order_id, status: 'Delivered'};
+  handleOnDeliver(action) {
+    const body = {order_id: this.state.order_id, status: action};
     axios
       .put(`${global.server}/api/order/proccess/${this.state.rider_id}`, body)
       .then(res => {
@@ -95,7 +96,7 @@ export default class ProductDetail extends Component {
         // this.setState({
         //   data: orderData,
         // });
-        Alert.alert('Success', 'Order Deliverd');
+        Alert.alert('Success', 'Order ' + action);
         this.props.navigation.navigate('Dashboard');
 
         // setOrderData(res.data);
@@ -115,6 +116,7 @@ export default class ProductDetail extends Component {
           <View style={{alignItems: 'center', marginHorizontal: 30}}>
             <Text style={styles.name}>{this.state.name}</Text>
             <Text style={styles.price}>P{this.state.total}</Text>
+            <Text style={styles.description}>{this.state.phone_number}</Text>
             <Text style={styles.description}>{this.state.address}</Text>
           </View>
           <View style={styles.separator}></View>
@@ -145,7 +147,9 @@ export default class ProductDetail extends Component {
           </View>
           {/* <View style={styles.contentColors}></View>
           <View style={styles.contentSize}></View> */}
-          {this.state.action == 'not accepted' ? (
+
+          {this.state.action == 'history' ? null : this.state.action ==
+            'not accepted' ? (
             <>
               <View style={styles.separator}></View>
               <View style={styles.addToCarContainer}>
@@ -162,8 +166,15 @@ export default class ProductDetail extends Component {
               <View style={styles.addToCarContainer}>
                 <TouchableOpacity
                   style={styles.shareButton}
-                  onPress={() => this.handleOnDeliver()}>
+                  onPress={() => this.handleOnDeliver('Delivered')}>
                   <Text style={styles.shareButtonText}>Delivered</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.addToCarContainer}>
+                <TouchableOpacity
+                  style={[styles.shareButton, styles.btnDanger]}
+                  onPress={() => this.handleOnDeliver('Rejected')}>
+                  <Text style={styles.shareButtonText}>Reject</Text>
                 </TouchableOpacity>
               </View>
             </>
@@ -286,5 +297,8 @@ const styles = StyleSheet.create({
   },
   addToCarContainer: {
     marginHorizontal: 30,
+  },
+  btnDanger: {
+    backgroundColor: '#cb4335',
   },
 });

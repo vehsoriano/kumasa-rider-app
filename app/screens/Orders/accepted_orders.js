@@ -8,11 +8,12 @@ import {
   TouchableOpacity,
   FlatList,
   Dimensions,
+  AsyncStorage,
   Modal,
   ScrollView,
 } from 'react-native';
 // import {Table, Row, Rows} from 'react-native-table-component';
-
+let id_token = '';
 export default class Orders extends Component {
   constructor(props) {
     super(props);
@@ -44,27 +45,38 @@ export default class Orders extends Component {
       order_id: item.order_id,
       name: item.first_name + ' ' + item.last_name,
       address: item.order_address + ' ' + item.order_city,
+      phone_number: item.phone_number,
       total: item.order_total,
       action: 'accepted',
     });
   };
 
   getData = () => {
-    axios
-      .get(`${global.server}/api/order/orders`)
-      .then(res => {
-        // console.log(res.data);
-        const orderData = res.data;
-        this.setState({
-          data: orderData,
+    AsyncStorage.getItem('id_token').then(res => {
+      id_token = res;
+      // console.log(id_token);
+      // get the user detail
+      axios
+        .get(`${global.server}/api/auth`, {headers: {'x-auth-token': id_token}})
+        .then(res => {
+          const userData = res.data;
+          axios
+            .get(`${global.server}/api/order/orders/${userData._id}`)
+            .then(res => {
+              // console.log(res.data);
+              const orderData = res.data;
+              this.setState({
+                data: orderData,
+              });
+              // setOrderData(res.data);
+              // setCurrentOrder(res.data);
+              // setLoader(true)
+            })
+            .catch(err => {
+              console.log(err.response);
+            });
         });
-        // setOrderData(res.data);
-        // setCurrentOrder(res.data);
-        // setLoader(true)
-      })
-      .catch(err => {
-        console.log(err.response);
-      });
+    });
   };
 
   // setModalVisible(visible) {

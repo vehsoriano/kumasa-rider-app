@@ -276,14 +276,17 @@ export default class Dashboard extends Component {
                 {/* <Text style={styles.info}>Icon</Text> */}
               </View>
             </TouchableOpacity>
-            {/* <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate('OrderHistory');
+              }}>
               <View style={styles.menuBox}>
                 <Image
                   style={styles.icon}
-                  source={require('../../images/settings.png')}
+                  source={require('../../images/list.png')}
                 />
               </View>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
           </View>
         </View>
       </View>

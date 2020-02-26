@@ -17,6 +17,7 @@ import Map from './app/screens/Map/map';
 import Navigation from './app/components/BottomTabBar/navigation';
 import AcceptedOrder from './app/screens/Orders/accepted_orders';
 import OrderDetail from './app/screens/Orders/order_details';
+import OrderHistory from './app/screens/Orders/order_history';
 
 const Auth = createStackNavigator(
   {
@@ -78,6 +79,16 @@ const App = createStackNavigator({
     screen: OrderDetail,
     navigationOptions: {
       title: 'Order Detail',
+      headerTintColor: '#fff',
+      headerStyle: {
+        backgroundColor: '#f4511e',
+      },
+    },
+  },
+  OrderHistory: {
+    screen: OrderHistory,
+    navigationOptions: {
+      title: 'Order History',
       headerTintColor: '#fff',
       headerStyle: {
         backgroundColor: '#f4511e',
