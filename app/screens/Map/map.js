@@ -11,7 +11,11 @@ import {
   ScrollView,
 } from 'react-native';
 // import {Table, Row, Rows} from 'react-native-table-component';
-
+// import MapboxGL from '@mapbox/react-native-mapbox-gl';
+// import StoreLocatorKit from '@mapbox/store-locator-react-native';
+// const mapboxClient = new MapboxClient(
+//   pk.eyJ1IjoibXJqZXJhbGQwNCIsImEiOiJjazc4cHoyMjMwM2xxM3JzNmJ6c2kyZDl2In0.VRfsRdc4f72NogKny_EplA,
+// );
 export default class Orders extends Component {
   constructor(props) {
     super(props);
@@ -31,10 +35,59 @@ export default class Orders extends Component {
     this.setState({modalVisible: visible});
   }
 
+  // for mapbox
+
+  async fetchDirections(origin, destination) {
+    const originLatLng = {
+      latitude: origin[1],
+      longitude: origin[0],
+    };
+
+    const destLatLng = {
+      latitude: dest[1],
+      longitude: dest[0],
+    };
+
+    const requestOptions = {
+      profile: this.props.type,
+      geometry: 'polyline',
+    };
+
+    let res = null;
+    try {
+      res = await mapboxClient.getDirections(
+        [originLatLng, destLatLng],
+        requestOptions,
+      );
+    } catch (e) {
+      console.log(e);
+    }
+
+    if (res !== null) {
+      const directions = res.entity.routes[0];
+      this.setState({directions: directions});
+    }
+  }
+
   render() {
-    return (
-      <View style={{flex: 1}}>{/* <MapView style={styles.map} /> */}</View>
-    );
+    return <View style={{flex: 1}}></View>;
+    // const directions = this.state.directions;
+
+    // if (!directions) {
+    //   return null;
+    // }
+
+    // return (
+    //   <MapboxGL.ShapeSource
+    //     id="mapbox-directions-source"
+    //     shape={directions.geometry}>
+    //     <MapboxGL.LineLayer
+    //       id="mapbox-directions-line"
+    //       belowLayerID={Places.UnselectedSymbolID}
+    //       style={[styles.directionsLine, this.props.style]}
+    //     />
+    //   </MapboxGL.ShapeSource>
+    // );
   }
 }
 

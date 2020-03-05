@@ -248,7 +248,7 @@ export default class Dashboard extends Component {
                   style={styles.icon}
                   source={require('../../images/map.png')}
                 />
-                {/* <Text style={styles.info}>Icon</Text> */}
+                <Text style={styles.info}>Map</Text>
               </View>
             </TouchableOpacity>
 
@@ -261,7 +261,7 @@ export default class Dashboard extends Component {
                   style={styles.icon}
                   source={require('../../images/orders.png')}
                 />
-                {/* <Text style={styles.info}>Icon</Text> */}
+                <Text style={styles.info}>Orders</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity
@@ -273,7 +273,7 @@ export default class Dashboard extends Component {
                   style={styles.icon}
                   source={require('../../images/profile.png')}
                 />
-                {/* <Text style={styles.info}>Icon</Text> */}
+                <Text style={styles.info}>Profile</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity
@@ -285,6 +285,7 @@ export default class Dashboard extends Component {
                   style={styles.icon}
                   source={require('../../images/list.png')}
                 />
+                <Text style={styles.info}>History</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -395,7 +396,7 @@ const styles = StyleSheet.create({
     height: 60,
   },
   info: {
-    fontSize: 22,
+    fontSize: 15,
     color: '#696969',
   },
   buttonStatusHolder: {
