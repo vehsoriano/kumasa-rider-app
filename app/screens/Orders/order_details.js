@@ -18,6 +18,7 @@ export default class ProductDetail extends Component {
     super(props);
     this.state = {
       data: [],
+      order: {},
       rider_id: '',
       order_id: this.props.navigation.state.params.order_id,
       name: this.props.navigation.state.params.name,
@@ -35,7 +36,8 @@ export default class ProductDetail extends Component {
         console.log(res.data);
         const orderData = res.data;
         this.setState({
-          data: orderData,
+          data: orderData.data,
+          order: orderData.order,
         });
 
         // setOrderData(res.data);
@@ -120,8 +122,41 @@ export default class ProductDetail extends Component {
             <Text style={styles.description}>{this.state.address}</Text>
           </View>
           <View style={styles.separator}></View>
-          <Text style={styles.title}>LIST OF ORDERS</Text>
+          <Text style={styles.title}>ORDER DETAILS:</Text>
+          <View style={styles.descriptionGroup}>
+            <Text style={styles.subTitle}>Order Id:</Text>
+            <Text style={styles.detailsDescription}>
+              {this.state.order.order_id}
+            </Text>
+          </View>
+          <View style={styles.descriptionGroup}>
+            <Text style={styles.subTitle}>Ordered On:</Text>
+            <Text style={styles.detailsDescription}>
+              {this.state.order.created_at}
+            </Text>
+          </View>
+          <View style={styles.descriptionGroup}>
+            <Text style={styles.subTitle}>Delivery Address:</Text>
+            <Text style={styles.detailsDescription}>
+              {this.state.order.address + ', ' + this.state.order.city}
+            </Text>
+          </View>
+          <View style={styles.descriptionGroup}>
+            <Text style={styles.subTitle}>Other Request:</Text>
+            <Text style={styles.detailsDescription}>
+              {this.state.order.otherRequest}
+            </Text>
+          </View>
+          <View style={styles.descriptionGroup}>
+            <Text style={styles.subTitle}>Delivery Time:</Text>
+            <Text style={styles.detailsDescription}>
+              {this.state.order.reservationTime}
+            </Text>
+          </View>
+
           <View style={styles.separator}></View>
+          <Text style={styles.title}>ORDER ITEMS:</Text>
+
           <View style={styles.ordersContainer}>
             {/* <Text>List of Orders here</Text> */}
 
@@ -210,6 +245,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: '#696969',
   },
+  detailsDescription: {
+    marginLeft: 25,
+    marginTop: 10,
+    color: '#696969',
+  },
   star: {
     width: 40,
     height: 40,
@@ -234,9 +274,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    // marginLeft: 25,
+    marginLeft: 25,
     marginTop: 10,
-    alignSelf: 'center',
+    color: '#f4511e',
+    fontSize: 15,
+    // alignSelf: 'center',
+  },
+  subTitle: {
+    marginLeft: 25,
+    marginTop: 10,
+  },
+  descriptionGroup: {
+    flexDirection: 'row',
   },
   ordersContainer: {
     justifyContent: 'center',

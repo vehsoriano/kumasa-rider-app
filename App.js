@@ -13,8 +13,8 @@ export default class Onboarding extends React.Component {
   constructor() {
     super();
     //Setting up global variable
-    global.server = 'http://192.168.1.111:5000';
-    // global.server = 'https://kumasa-admin.herokuapp.com';
+    // global.server = 'http://192.168.43.188:5000';
+    global.server = 'https://kumasa-admin.herokuapp.com';
   }
   render() {
     return <Routes />;

@@ -238,7 +238,7 @@ export default class Dashboard extends Component {
             </TouchableOpacity>
           </View>
           <View style={styles.bodyContent}>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => {
                 this.props.navigation.navigate('Map');
                 // this.testChange();
@@ -250,7 +250,7 @@ export default class Dashboard extends Component {
                 />
                 <Text style={styles.info}>Map</Text>
               </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             <TouchableOpacity
               onPress={() => {
@@ -266,18 +266,6 @@ export default class Dashboard extends Component {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                this.props.navigation.navigate('Profile');
-              }}>
-              <View style={styles.menuBox}>
-                <Image
-                  style={styles.icon}
-                  source={require('../../images/profile.png')}
-                />
-                <Text style={styles.info}>Profile</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
                 this.props.navigation.navigate('OrderHistory');
               }}>
               <View style={styles.menuBox}>
@@ -286,6 +274,18 @@ export default class Dashboard extends Component {
                   source={require('../../images/list.png')}
                 />
                 <Text style={styles.info}>History</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate('Profile');
+              }}>
+              <View style={styles.menuBox}>
+                <Image
+                  style={styles.icon}
+                  source={require('../../images/profile.png')}
+                />
+                <Text style={styles.info}>Profile</Text>
               </View>
             </TouchableOpacity>
           </View>
